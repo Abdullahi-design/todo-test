@@ -8,7 +8,7 @@ export const restaurants = [
             {id: "A3", name: "Fried Yam", price: 800, imageLink: ''}
         ],
         addOn: [
-            {id: "A4", name: "Onion Sauce", price: 'free', amount: 1, imageLink: ''},
+            {id: "A4", name: "Onion Sauce", price: 0, amount: 1, imageLink: ''},
             {id: "A5", name: "Chicken", price: 1500, amount: 1, imageLink: ''},
             {id: "A6", name: "Plantain", price: 200, amount: 1, imageLink: ''},
             {id: "A7", name: "Boiled Eggs", price: 200, amount: 1, imageLink: ''},
