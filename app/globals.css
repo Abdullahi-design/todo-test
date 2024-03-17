@@ -4,13 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
-*/
-
-/* logo_color: #ff5722 */
-/* logo_color: #1f2937 */
-
 .main {
   width: 100vw;
   min-height: 100vh;
@@ -82,4 +75,11 @@
 
 .orange_gradient {
   @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
+}
+
+.form_input {
+  @apply w-[20%] border-gray-400 border mx-2 flex rounded-lg p-1 text-sm text-gray-500 outline-0;
+}
+.check_box {
+  @apply border border-orange-600 transition delay-150  cursor-pointer w-6 h-6 text-white mx-auto flex justify-end bg-orange-600 p-2 mt-12 hover:bg-white hover:text-black rounded-lg outline-0;
 }

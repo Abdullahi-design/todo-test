@@ -25,7 +25,7 @@ export default function RootLayout({
 
         <main className=''>
           <div className='app flex flex-col overflow-hidden min-h-screen'>
-            {/* <Nav/> */}
+            <Nav/>
             <div className='flex-grow flex-1'>{children}</div>
             <Footer/>
           </div>
