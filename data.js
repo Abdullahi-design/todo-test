@@ -9,20 +9,20 @@ export const restaurants = [
         ],
         addOn: [
             {id: "A4", name: "Onion Sauce", price: 'free', amount: 1, imageLink: ''},
-            {id: "A4", name: "Chicken", price: 1500, amount: 1, imageLink: ''},
-            {id: "A5", name: "Plantain", price: 200, amount: 1, imageLink: ''},
-            {id: "A6", name: "Boiled Eggs", price: 200, amount: 1, imageLink: ''},
-            {id: "A7", name: "Fried Eggs", price: 200, amount: 1, imageLink: ''},
-            {id: "A8", name: "Liver Sauce", price: 200, amount: 1, imageLink: ''},
-            {id: "A9", name: "Beaf", price: 200, amount: 1, imageLink: ''}
+            {id: "A5", name: "Chicken", price: 1500, amount: 1, imageLink: ''},
+            {id: "A6", name: "Plantain", price: 200, amount: 1, imageLink: ''},
+            {id: "A7", name: "Boiled Eggs", price: 200, amount: 1, imageLink: ''},
+            {id: "A8", name: "Fried Eggs", price: 200, amount: 1, imageLink: ''},
+            {id: "A9", name: "Liver Sauce", price: 200, amount: 1, imageLink: ''},
+            {id: "A10", name: "Beaf", price: 200, amount: 1, imageLink: ''}
         ],
         drinks: [
-            {id: "A10", name: "Bottle water", price: 150, amount: 1, imageLink: ''},
-            {id: "A11", name: "Coke 75cl", price: 250, amount: 1, imageLink: ''},
-            {id: "A12", name: "Fanta 75cl", price: 250, amount: 1, imageLink: ''},
-            {id: "A13", name: "Sprite 75cl", price: 250, amount: 1, imageLink: ''},
-            {id: "A14", name: "Five alive 100cl", price: 300, amount: 1, imageLink: ''},
-            {id: "A15", name: "Maltina can", price: 300, amount: 1, imageLink: ''},
+            {id: "A11", name: "Bottle water", price: 150, amount: 1, imageLink: ''},
+            {id: "A12", name: "Coke 75cl", price: 250, amount: 1, imageLink: ''},
+            {id: "A13", name: "Fanta 75cl", price: 250, amount: 1, imageLink: ''},
+            {id: "A14", name: "Sprite 75cl", price: 250, amount: 1, imageLink: ''},
+            {id: "A15", name: "Five alive 100cl", price: 300, amount: 1, imageLink: ''},
+            {id: "A16", name: "Maltina can", price: 300, amount: 1, imageLink: ''},
         ]
     },
     {

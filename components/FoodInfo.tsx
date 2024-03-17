@@ -5,8 +5,13 @@ import { FaBowlRice } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import { IoMdAdd } from "react-icons/io";
 import { GiWineGlass } from "react-icons/gi";
+import AddToCartButton from "./AddToCart";
+import { useState } from "react";
+import { useCart } from "@/app/hooks/use-cart";
 
 const FoodInfo = ({ dish }: any) => {
+
+    const { addItem } = useCart()
     console.log(dish, 'man');
 
     const buyFood = (food: any) => {
@@ -32,7 +37,8 @@ const FoodInfo = ({ dish }: any) => {
                         <span className=''><FaBowlRice className='w-48 h-48 text-center mx-auto text-orange-600' /></span>
                         <h1 className='text-gray-700 text-xl font-bold text-center my-2'>{food.name}</h1> 
                         <h1 className='text-gray-600 text-base font-bold text-center my-2'>Price: <span>₦{food.price}</span></h1>
-                        <button onClick={() => buyFood(food)} className='text-white mx-auto flex justify-center bg-orange-600 px-8 p-2 rounded-md mt-4 hover:bg-white hover:text-black border border-orange-600 transition delay-150'>Buy</button>
+                        <AddToCartButton food={food}/>
+                        {/* <button onClick={() => buyFood(food)} className='text-white mx-auto flex justify-center bg-orange-600 px-8 p-2 rounded-md mt-4 hover:bg-white hover:text-black border border-orange-600 transition delay-150'>Buy</button> */}
                     </div>
                 )
             ))}
@@ -45,7 +51,7 @@ const FoodInfo = ({ dish }: any) => {
                     restaurant.addOn.map((addOn) => (
                         <ul key={addOn.id} className='bg-white shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
                             <div className="relative text-center">
-                                <span className='top-0 right-28 absolute z-20 rounded-full'>
+                                <span className='top-0 -left-6 absolute z-20 rounded-full'>
                                     <GoDotFill className='w-4 h-4 text-green-700 '/>
                                 </span>
                                 <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
@@ -71,7 +77,13 @@ const FoodInfo = ({ dish }: any) => {
                                 {/* <h1 className=''>Status: <span className='text-green-600'>Active</span> </h1> */}
                             </div>
                             <span>
-                                <input type="checkbox" className="check_box" />
+                                <input 
+                                type="checkbox" 
+                                className="check_box" 
+                                onClick={() => {
+                                    addItem(addOn)
+                                }}
+                                />
                             </span>
                             {/* <span onClick={() => addAddOn(addOn)} className='mt-12'>
                                 <IoMdAdd className=" cursor-pointer w-8 h-8 text-white mx-auto flex justify-end bg-orange-600 p-2 rounded-full mt-4 hover:bg-white hover:text-black border border-orange-600 transition delay-150"/>
