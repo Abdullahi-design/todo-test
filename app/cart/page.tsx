@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useCart } from '../hooks/use-cart'
+import Checkout from "@/components/Checkout";
 
 const Page = () => {
   const { items, removeItem } = useCart()
@@ -108,7 +109,7 @@ const Page = () => {
                                     ₦{food.price}
                                     </p>
                                     <p className='mt-1 text-sm font-medium text-gray-900'>
-                                    <span className=" font-normal">amount:</span> {quantity}
+                                    <span className=" font-normal">quantity:</span> {quantity}
                                     </p>
                                 </div>
 
@@ -196,7 +197,7 @@ const Page = () => {
                 </div>
                 <div className='text-base font-medium text-gray-900'>
                   {isMounted ? (
-                    <span>₦{(cartTotal + fee) * quantity}</span>
+                    <span>₦{(cartTotal + fee)}</span>
                   ) : (
                     <FiLoader className='h-4 w-4 animate-spin text-muted-foreground' />
                   )}
@@ -205,18 +206,7 @@ const Page = () => {
             </div>
 
             <div className='mt-6'>
-              <button
-                // disabled={items.length === 0 || isLoading}
-                // onClick={() =>
-                //   createCheckoutSession({ productIds })
-                // }
-                className='w-fit px-4 py-2 border border-orange-600 mx-auto flex justify-center mt-4 hover:text-white hover:bg-orange-600 rounded-md text-xl text-gray-700'
-                size='lg'>
-                {isLoading ? (
-                  <FiLoader className='w-4 h-4 animate-spin mr-1.5' />
-                ) : null}
-                Checkout
-              </button>
+              <Checkout cartTotal={cartTotal} fee={fee} items={items} isLoading={isLoading}/>
             </div>
           </section>
         </div>
