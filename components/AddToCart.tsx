@@ -21,7 +21,7 @@ const AddToCartButton = ({ food }: any) => {
             addItem(food)
             setIsSuccess(true)
         }}
-        className='w-fit px-4 py-2 border border-orange-600 mx-auto flex justify-center mt-4 hover:text-white hover:bg-orange-600 rounded-md text-xl text-gray-700'>
+        className='w-fit px-4 py-2 border border-orange-600 mx-auto flex justify-center mt-4 hover:text-white hover:bg-orange-600 rounded-md md:text-xl text-base text-gray-700'>
         {isSuccess ? 'Added!' : 'Add to cart'}
         </button>
     )

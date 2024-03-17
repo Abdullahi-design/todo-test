@@ -25,7 +25,7 @@ const FoodInfo = ({ dish }: any) => {
     };
     
   return (
-    <section className="flex justify-around gap-4">
+    <section className="md:flex justify-around gap-4">
         <div>
             {dish && dish.map((food: any, index: number) => (
                     // console.log(food, 'yam')
@@ -34,7 +34,7 @@ const FoodInfo = ({ dish }: any) => {
                         <span className='top-0 left-0 absolute z-20 rounded-full'>
                             <GoDotFill className='w-8 h-8 text-green-700 '/>
                         </span>
-                        <span className=''><FaBowlRice className='w-48 h-48 text-center mx-auto text-orange-600' /></span>
+                        <span className=''><FaBowlRice className='w-32 md:w-48 h-32 md:h-48 text-center mx-auto text-orange-600' /></span>
                         <h1 className='text-gray-700 text-xl font-bold text-center my-2'>{food.name}</h1> 
                         <h1 className='text-gray-600 text-base font-bold text-center my-2'>Price: <span>₦{food.price}</span></h1>
                         <AddToCartButton food={food}/>
@@ -45,11 +45,11 @@ const FoodInfo = ({ dish }: any) => {
         </div>
 
         <>
-            <h1 className='text-2xl mt-4 text-orange-600 font-bold tracking-widest absolute right-[22rem] top-24'>Add On</h1>
-            <div className="overflow-y-auto h-[26rem] w-1/2 mt-20 rounded-md">
+            <h1 className='text-2xl mt-4 text-orange-600 font-bold tracking-widest md:absolute text-center right-[22rem] top-24'>Add On</h1>
+            <div className="overflow-y-auto h-[26rem] md:w-1/2 w-full md:mt-20 mt-5 rounded-md">
                 {restaurants.map((restaurant) => (
                     restaurant.addOn.map((addOn) => (
-                        <ul key={addOn.id} className='bg-white shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
+                        <ul key={addOn.id} className='bg-white mx-auto shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
                             <div className="relative text-center">
                                 <span className='top-0 -left-6 absolute z-20 rounded-full'>
                                     <GoDotFill className='w-4 h-4 text-green-700 '/>

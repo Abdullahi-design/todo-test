@@ -18,7 +18,7 @@ const Nav = () => {
     <div className='border-b-[1.7px] border-black w-full flex justify-between'>
       <Link href={'/'}>
         <h1 className="my-3 orange_gradient text-4xl font-extrabold leading-[1.15] text-black md:text-5xl">
-          LOGO
+          Ziype
         </h1>
       </Link>
       <Link href={'/cart'}>
