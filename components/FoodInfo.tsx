@@ -11,7 +11,13 @@ import { useCart } from "@/app/hooks/use-cart";
 
 const FoodInfo = ({ dish }: any) => {
 
-    const { addItem } = useCart()
+    const [addOnQty, setAddOnQty] = useState<{ [key: string]: number }>({});
+
+    const handleAddOnQuantityChange = (addOnId: string, quantity: number) => {
+        setAddOnQty({ ...addOnQty, [addOnId]: quantity });
+    };
+
+    const { addItemWithQuantity } = useCart()
     console.log(dish, 'man');
 
     const buyFood = (food: any) => {
@@ -32,7 +38,7 @@ const FoodInfo = ({ dish }: any) => {
                 food && food.name && (
                     <div key={index} className='relative rounded-md my-20 bg-white shadow-lg p-6 py-12 px-32 justify-center'>
                         <span className='top-0 left-0 absolute z-20 rounded-full'>
-                            <GoDotFill className='w-8 h-8 text-green-700 '/>
+                            <GoDotFill className={`w-8 h-8 ${food.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
                         </span>
                         <span className=''><FaBowlRice className='w-32 md:w-48 h-32 md:h-48 text-center mx-auto text-orange-600' /></span>
                         <h1 className='text-gray-700 text-xl font-bold text-center my-2'>{food.name}</h1> 
@@ -52,7 +58,7 @@ const FoodInfo = ({ dish }: any) => {
                         <ul key={addOn.id} className='bg-white mx-auto shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
                             <div className="relative text-center">
                                 <span className='top-0 -left-6 absolute z-20 rounded-full'>
-                                    <GoDotFill className='w-4 h-4 text-green-700 '/>
+                                    <GoDotFill className={`w-8 h-8 ${addOn.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
                                 </span>
                                 <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
                                 <h1 className='text-gray-600'>{addOn.name}</h1> 
@@ -66,8 +72,8 @@ const FoodInfo = ({ dish }: any) => {
                                         Portion {" "}
                                     </span>
                                     <input
-                                        value={addOn.amount}
-                                        // onChange={(e) => setProduct({ ...product, price: e.target.value })}
+                                        value={addOnQty[addOn.id] || ""}
+                                        onChange={(e) => handleAddOnQuantityChange(addOn.id, parseInt(e.target.value))}
                                         type='number'
                                         placeholder='1'
                                         required
@@ -81,7 +87,7 @@ const FoodInfo = ({ dish }: any) => {
                                 type="checkbox" 
                                 className="check_box" 
                                 onClick={() => {
-                                    addItem(addOn)
+                                    addItemWithQuantity(addOn, addOnQty[addOn.id] || 1);
                                 }}
                                 />
                             </span>
@@ -102,7 +108,7 @@ const FoodInfo = ({ dish }: any) => {
                         <ul key={addOn.id} className='bg-white shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
                             <div className="relative text-center">
                                 <span className='top-0 right-28 absolute z-20 rounded-full'>
-                                    <GoDotFill className='w-4 h-4 text-green-700 '/>
+                                    <GoDotFill className={`w-8 h-8 ${addOn.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
                                 </span>
                                 <span className=''><GiWineGlass className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
                                 <h1 className='text-gray-600'>{addOn.name}</h1> 
