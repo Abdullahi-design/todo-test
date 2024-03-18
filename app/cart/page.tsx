@@ -11,10 +11,21 @@ import { useCart } from '../hooks/use-cart'
 import Checkout from "@/components/Checkout";
 
 const Page = () => {
-  const { items, removeItem } = useCart()
-  const [isLoading, setIsLoading] = useState(false)
+    const { items, removeItem, updateItemQuantity } = useCart()
+    const [isLoading, setIsLoading] = useState(false)
 
-  console.log(items, 'items');
+    const [quantities, setQuantities] = useState({});
+
+    const handleQuantityChange = (id: string, newQuantity: number) => {
+        // Ensure new quantity is not less than 1
+        if (newQuantity < 1) {
+            newQuantity = 1;
+        }
+        // Update local state to reflect the change
+        setQuantities({ ...quantities, [id]: newQuantity });
+        // Update quantity in the cart
+        updateItemQuantity(id, newQuantity);
+    };
 
   // const router = useRouter()
 
@@ -26,7 +37,7 @@ const Page = () => {
   //   })
 
   // const productIds = items.map(({ food }) => food.id)
-  const quantity = items.reduce((total, item) => total + item.quantity, 0);    
+  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0); 
 
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
@@ -34,9 +45,9 @@ const Page = () => {
   }, [])
 
   const cartTotal = items.reduce(
-    (total, { food }) => total + food.price,
+    (total, { food, quantity }) => total + (food.price * quantity),
     0
-  )
+  );  
 
   const fee = 300;
 
@@ -73,7 +84,7 @@ const Page = () => {
             <ul
               className={'divide-y divide-gray-200 border-b border-t border-gray-200'}>
               {isMounted &&
-                items.map(({ food }) => {
+                items.map(({ food, quantity }: { food: any, quantity: number }) => {
                   // const label = PRODUCT_CATEGORIES.find(
                   //   (c) => c.value === food.category
                   // )?.label
@@ -108,9 +119,19 @@ const Page = () => {
                                     <p className='mt-1 text-sm font-medium text-gray-900'>
                                     ₦{food.price}
                                     </p>
-                                    <p className='mt-1 text-sm font-medium text-gray-900'>
+                                    {/* <p className='mt-1 text-sm font-medium text-gray-900'>
                                     <span className=" font-normal">quantity:</span> {quantity}
-                                    </p>
+                                    </p> */}
+                                    <div className="flex mt-1 text-sm font-medium text-gray-900">
+                                        <label className="font-normal mt-1">Quantity:</label>
+                                        <input
+                                        type="number"
+                                        min="1"
+                                        value={quantity}
+                                        onChange={(e) => handleQuantityChange(food.id, parseInt(e.target.value))}
+                                        className="form_input"
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className='mt-4 sm:mt-0 sm:pr-9 w-20'>
@@ -131,7 +152,7 @@ const Page = () => {
                                 </div>
                             </div>
 
-                            {food.category == 'physical food' && (
+                            {food.status == 'Active' && (
                             <p className='mt-4 flex space-x-2 text-sm text-gray-700'>
                                 <FaCheck className='h-5 w-5 flex-shrink-0 text-green-500' />
 
@@ -184,7 +205,7 @@ const Page = () => {
                 </div>
                 <div className='text-sm font-medium text-gray-900'>
                   {isMounted ? (
-                    <span>{quantity}</span>
+                    <span>{totalQuantity}</span>
                   ) : (
                     <FiLoader className='h-4 w-4 animate-spin text-muted-foreground' />
                   )}
@@ -206,7 +227,7 @@ const Page = () => {
             </div>
 
             <div className='mt-6'>
-              <Checkout cartTotal={cartTotal} fee={fee} items={items} isLoading={isLoading}/>
+              <Checkout cartTotal={cartTotal} fee={fee} items={items} />
             </div>
           </section>
         </div>
