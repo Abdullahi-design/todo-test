@@ -3,7 +3,7 @@ export const restaurants = [
         id: 1,
         name: "Every Day Restaurant", 
         dishes: [
-            {id: "A1", name: "Jellof Rice", status: "Active", price: 800, imageLink: ''},
+            {id: "A1", name: "Jollof Rice", status: "Active", price: 800, imageLink: ''},
             {id: "A2", name: "Fried Rice", status: "Active", price: 800, imageLink: ''},
             {id: "A3", name: "Fried Yam", status: "Active", price: 800, imageLink: ''}
         ],
@@ -40,4 +40,10 @@ export const restaurants = [
             {id: "B7", name: "Beaf", status: "Active", price: 200, amount: 1, imageLink: ''}
         ]
     },
+]
+
+export const riders = [
+    {id: "R1", name: "Mr.Abdul-Mujeeb", phoneNumber: 2348160786928, status: "Active"},
+    {id: "R2", name: "Mr.Abdul-Mujeeb", phoneNumber: 2348160786928, status: "Active"},
+    {id: "R3", name: "Mr.Abdul-Mujeeb", phoneNumber: 2348160786928, status: "Active"},
 ]
