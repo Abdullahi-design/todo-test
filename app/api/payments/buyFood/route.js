@@ -4,7 +4,9 @@ export const POST = async function (request) {
     const URL = process.env.NEXT_PUBLIC_URL;
     
     const { 
-        email,
+        name,
+        phoneNumber,
+        address,
         totalPrice,
         foodId,
         // restaurantId,
@@ -28,7 +30,7 @@ export const POST = async function (request) {
         amount: totalPrice * 100, // Convert to kobo (NGN 100 = 10000 kobo),
         callback_url: `${URL}/thankYou`,
         metadata: {
-            foodId
+            name, foodId, phoneNumber, address,
         }
       };
   
@@ -40,7 +42,7 @@ export const POST = async function (request) {
   
       const paystackResult = await paystackResponse.json();
   
-      console.log(paystackResult); 
+      console.log(paystackResult, 'paystackResult'); 
   
       return new Response(JSON.stringify(paystackResult), { status: 200 });
     } catch (error) {

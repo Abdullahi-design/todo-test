@@ -1,37 +1,38 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { FiLoader } from 'react-icons/fi'
+import UserDetails from './UserDetails';
 
 const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items: any}) => {
 
-    const [email, setEmail] = useState('');
-    const [foodId, setFoodId] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [foodId, setFoodId] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter()
 
     const totalPrice = cartTotal + fee;
-    const handleCheckout = async (food: any) => {
+    const handleCheckout = async (foodItems: any | any[]) => {
         try {
 
             setIsLoading(true);
 
-            food.map((item: any) => {
-                setFoodId(item.food.id)
-                
-            })
+            const foodIds = foodItems.map((item: any) => item.food.id);
 
-
-            if (foodId) {
+            if (foodIds && address && phoneNumber) {
                 
                 // Fetch the Paystack response after navigation
                 const response = await fetch(`/api/payments/buyFood`, {
                 method: "POST",
                 body: JSON.stringify({
-                    // email,
+                    name,
+                    phoneNumber,
+                    address,
                     totalPrice,
-                    foodId,
+                    foodId: foodIds,
                     // restaurantId,
                 }),
                 headers: { "Content-Type": "application/json" }, 
@@ -39,7 +40,7 @@ const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items
                 const paystackResponse = await response.json();
                 
                 // Log the Paystack response
-                // console.log('Paystack Response:', paystackResponse);
+                console.log('Paystack Response:', paystackResponse);
         
                 if (paystackResponse.status == true) {
                 await router.push(`${paystackResponse.data.authorization_url}`)
@@ -57,22 +58,37 @@ const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items
     };
 
     return (
-        <button
-        disabled={isNaN(totalPrice) || totalPrice < 400}
-        onClick={() => handleCheckout(items)}
-        className={`w-fit px-4 py-2 ${isNaN(totalPrice) || totalPrice < 400 ? 'bg-gray-300 cursor-not-allowed' : 'border border-orange-600 hover:text-white hover:bg-orange-600'} mx-auto flex justify-center mt-4 rounded-md text-xl text-gray-700`}
-        >
-            {isLoading ? (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center">
-                    <div className="fixed inset-0 bg-black opacity-50"></div>
-                    <FiLoader className='w-4 h-4 animate-spin mr-1.5' />
-                  </div>
-                ) : (
-                    'Checkout'
-                )
-            }
-            
-        </button>
+        <div>
+            <button
+                disabled={isNaN(totalPrice) || totalPrice < 400}
+                onClick={() => handleCheckout(items)}
+                className={`w-fit px-4 py-2 ${isNaN(totalPrice) || totalPrice < 400 ? 'bg-gray-300 cursor-not-allowed' : 'border border-orange-600 hover:text-white hover:bg-orange-600'} mx-auto flex justify-center mt-4 rounded-md text-xl text-gray-700`}
+            >
+                {isLoading ? (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div className="fixed inset-0 bg-black opacity-50"></div>
+                        <FiLoader className='w-4 h-4 animate-spin mr-1.5' />
+                    </div>
+                    ) : (
+                        'Checkout'
+                    )
+                }
+                
+            </button>
+        {isModalOpen && (
+            <UserDetails 
+                address={address} 
+                phoneNumber={phoneNumber} 
+                name={name}
+                setName={setName}
+                setAddress={setAddress} 
+                setPhoneNumber={setPhoneNumber} 
+                setIsModalOpen={setIsModalOpen}
+                isLoading={isLoading}
+                onConfirm={() => handleCheckout(items)}
+            />
+          )}
+        </div>
     )
 }
 
