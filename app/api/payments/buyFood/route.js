@@ -8,7 +8,7 @@ export const POST = async function (request) {
         phoneNumber,
         address,
         totalPrice,
-        foodId,
+        foodItems,
         // restaurantId,
     } = await request.json();
   
@@ -30,7 +30,7 @@ export const POST = async function (request) {
         amount: totalPrice * 100, // Convert to kobo (NGN 100 = 10000 kobo),
         callback_url: `${URL}/thankYou`,
         metadata: {
-            name, foodId, phoneNumber, address,
+            name, foodItems, phoneNumber, address,
         }
       };
   

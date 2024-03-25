@@ -32,7 +32,7 @@ const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items
                     phoneNumber,
                     address,
                     totalPrice,
-                    foodId: foodIds,
+                    foodItems: foodItems,
                     // restaurantId,
                 }),
                 headers: { "Content-Type": "application/json" }, 
