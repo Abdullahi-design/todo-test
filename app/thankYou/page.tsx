@@ -1,14 +1,9 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
-import { useCart } from '../hooks/use-cart'
-import { useSearchParams } from 'next/navigation';
-import { FaBowlRice, FaCheck } from 'react-icons/fa6';
-import { IoMdClose } from 'react-icons/io';
-import Link from 'next/link';
-import { MdRemoveShoppingCart } from 'react-icons/md';
-import { restaurants } from '@/data';
 import Receipt from '@/components/Receipt';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useCart } from '../hooks/use-cart';
 
 export interface ReceiptData {
     id: string;
@@ -28,12 +23,6 @@ const page = () => {
     const [cusName, setCusName] = useState('')
     const [cusPhoneNumber, setCusPhoneNumber] = useState('')
     const [cusAddress, setCusAddress] = useState('')
-
-    const [foodId, setFoodId] = useState('')
-    const [foodQty, setFoodQty] = useState<number>()
-    const [foodName, setFoodName] = useState('')
-    const [foodPrice, setFoodPrice] = useState<number>()
-    const [foodStatus, setFoodStatus] = useState('')
     const [timeOrdered, setTimeOrdered] = useState('')
 
     const secretKey = 'sk_test_59941dc87ae903768b79b95834b1acd81c174e23';
@@ -61,8 +50,11 @@ const page = () => {
           const paystackResponse = await fetch(`https://${options.hostname}${options.path}`, options);
           const receipt = await paystackResponse.json();
 
-          const timeOrdered = receipt.paidAt
-          setTimeOrdered(timeOrdered);
+          const paidAtDate = new Date(receipt.data.paidAt);
+          const formattedDate = paidAtDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+          const formattedTime = paidAtDate.toLocaleTimeString(); // Format: HH:MM:SS
+      
+          setTimeOrdered(`${formattedDate} ${formattedTime}`);
           setCusName(receipt.data.metadata.name)
           setCusPhoneNumber(receipt.data.metadata.phoneNumber)
           setCusAddress(receipt.data.metadata.address)

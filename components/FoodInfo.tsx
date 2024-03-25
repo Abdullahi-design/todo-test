@@ -18,8 +18,6 @@ const FoodInfo = ({ dish }: any) => {
         setAddOnQty({ ...addOnQty, [addOnId]: quantity });
     };
 
-    console.log(dish, 'man');
-
     const buyFood = (food: any) => {
 
         alert(`${food.id}: working`)

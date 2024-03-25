@@ -24,6 +24,17 @@ const UserDetails = ({
     isLoading: any 
 }) => {
 
+  const handleConfirm = () => {
+    // Check if the phone number meets the criteria
+    if (phoneNumber && phoneNumber.startsWith('0') && phoneNumber.length === 11) {
+      // If it meets the criteria, proceed with onConfirm function
+      onConfirm();
+    } else {
+      // If it doesn't meet the criteria, show an alert
+      alert('Please enter a valid Nigerian phone number starting with 0 and with 11 digits.');
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-black opacity-50" onClick={() => setIsModalOpen(false)}></div>
@@ -40,19 +51,19 @@ const UserDetails = ({
                 value={name}
                 required
                 onChange={(e) => setName(e.target.value)}
-                className="w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0 border-gray-400 border"
+                className="w-full flex rounded-lg mt-2 p-3 mb-4 text-sm text-gray-500 outline-0 border-gray-400 border"
             />
         </label>
 
         <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>The delivery man will reachout to you</span>
             <input
-                type="number"
+                type="tel"
                 placeholder="Enter your Phone Number"
                 value={phoneNumber}
                 required
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full flex rounded-lg mt-2 p-3 text-sm text-gray-500 outline-0 border-gray-400 border"
+                className="w-full flex rounded-lg mt-2 p-3 mb-4 text-sm text-gray-500 outline-0 border-gray-400 border"
             />
         </label>
 
@@ -71,7 +82,7 @@ const UserDetails = ({
         <div className="flex justify-center mt-4">
           <button
             className="px-8 py-2 bg-primary-orange text-white rounded-md"
-            onClick={() => onConfirm()}
+            onClick={handleConfirm}
           >
             {isLoading ? (
                 <div className="fixed inset-0 z-50 flex items-center justify-center">

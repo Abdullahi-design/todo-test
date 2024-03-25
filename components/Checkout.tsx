@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
-import { FiLoader } from 'react-icons/fi'
+import { useState } from 'react';
+import { FiLoader } from 'react-icons/fi';
 import UserDetails from './UserDetails';
 
 const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items: any}) => {
@@ -8,7 +8,6 @@ const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items
     const [phoneNumber, setPhoneNumber] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
-    const [foodId, setFoodId] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false); 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -23,13 +22,15 @@ const Checkout = ({cartTotal, fee, items}:{cartTotal: number, fee: number, items
             const foodIds = foodItems.map((item: any) => item.food.id);
 
             if (foodIds && address && phoneNumber) {
+
+                const formattedNumber = `234${phoneNumber.slice(1)}`;
                 
                 // Fetch the Paystack response after navigation
                 const response = await fetch(`/api/payments/buyFood`, {
                 method: "POST",
                 body: JSON.stringify({
                     name,
-                    phoneNumber,
+                    phoneNumber: formattedNumber,
                     address,
                     totalPrice,
                     foodItems: foodItems,
