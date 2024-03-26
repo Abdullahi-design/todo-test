@@ -8,6 +8,7 @@ import { GiWineGlass } from "react-icons/gi";
 import AddToCartButton from "./AddToCart";
 import { useState } from "react";
 import { useCart } from "@/app/hooks/use-cart";
+import Image from "next/image";
 
 const FoodInfo = ({ dish }: any) => {
 
@@ -41,7 +42,17 @@ const FoodInfo = ({ dish }: any) => {
                                 <span>{restaurants.find((restaurant) => restaurant.dishes.find((dish: any) => dish.id === food.id))?.name}</span>
                             </h1>
                         </span>
-                        <span className=''><FaBowlRice className='w-32 md:w-48 h-32 md:h-48 text-center mx-auto text-orange-600' /></span>
+                        {food.imageLink ? (
+                            <Image
+                            src={food.imageLink}
+                            alt={food.name}
+                            width={210}
+                            height={210}
+                            className='object-contain mx-auto rounded-md cursor-pointer'
+                            />
+                        ):(
+                            <span className=''><FaBowlRice className='w-32 md:w-48 h-32 md:h-48 text-center mx-auto text-orange-600' /></span>
+                        )}
                         <h1 className='text-gray-700 text-xl font-bold text-center my-2'>{food.name}</h1> 
                         <h1 className='text-gray-600 text-base font-bold text-center my-2'>Price: <span>₦{food.price}</span></h1>
                         <AddToCartButton food={food}/>
@@ -62,7 +73,17 @@ const FoodInfo = ({ dish }: any) => {
                                     <span className='top-0 -left-6 absolute z-20 rounded-full'>
                                         <GoDotFill className={`w-8 h-8 ${addOn.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
                                     </span>
-                                    <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
+                                    {addOn.imageLink ? (
+                                        <Image
+                                        src={addOn.imageLink}
+                                        alt={addOn.name}
+                                        width={100}
+                                        height={100}
+                                        className='object-contain mx-auto rounded-md cursor-pointer'
+                                        />
+                                    ):(
+                                        <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
+                                    )}
                                     <h1 className='text-gray-600'>{addOn.name}</h1> 
                                     <h1 className='text-gray-600 text-sm font-bold text-center my-2'>Price: <span>₦{addOn.price}</span></h1>
                                     {/* <h1 className='text-gray-600 text-sm font-bold text-center my-2'>

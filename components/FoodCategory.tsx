@@ -1,6 +1,7 @@
 "use client";
 
 import { restaurants } from '@/data'
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { FaBowlRice } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
@@ -25,7 +26,18 @@ const FoodCategory = () => {
                         <span className='top-0 left-0 absolute z-20 rounded-full'>
                             <GoDotFill className={`w-8 h-8 ${dish.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
                         </span>
-                        <span className=''><FaBowlRice className='lg:w-48 md:w-36 md:h-36 lg:h-48 w-48 h-48 text-center mx-auto text-orange-600' /></span>
+                        {dish.imageLink ? (
+                            <Image
+                            onClick={() => handleFoodClick(dish)}  
+                            src={dish.imageLink}
+                            alt={dish.name}
+                            width={250}
+                            height={250}
+                            className='object-contain rounded-md cursor-pointer'
+                            />
+                        ):(
+                            <span onClick={() => handleFoodClick(dish)}  className='cursor-pointer'><FaBowlRice className='lg:w-48 md:w-36 md:h-36 lg:h-48 w-48 h-48 text-center mx-auto text-orange-600' /></span>
+                        )}                        
                         <h1 className='text-gray-700 text-xl font-bold text-center my-2'>{dish.name}</h1> 
                         <h1 className='text-gray-600 text-sm font-bold text-center my-2'>Price: <span>₦{dish.price}</span></h1>
                         <button 

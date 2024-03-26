@@ -54,7 +54,7 @@ const Page = () => {
   return (
     <div className='bg-white mt-4'>
       <div className='mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
-        <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+        <h1 className='text-2xl font-bold tracking-tight text-center text-gray-900 sm:text-4xl'>
           Transaction Break Down
         </h1>
 
@@ -82,7 +82,7 @@ const Page = () => {
             ) : null}
 
             <ul
-              className={'divide-y divide-gray-200 border-b border-t border-gray-200'}>
+              className={'divide-y divide-gray-200 md:w-full w-[14rem] border-b border-t border-gray-200'}>
               {isMounted &&
                 items.map(({ food, quantity }: { food: any, quantity: number }) => {
                   // const label = PRODUCT_CATEGORIES.find(
@@ -95,8 +95,17 @@ const Page = () => {
                     <li
                       key={food.id}
                       className='flex py-6 sm:py-10'>
-                        <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
-
+                        {food.imageLink ? (
+                          <Image
+                          src={food.imageLink}
+                          alt={food.name}
+                          width={50}
+                          height={50}
+                          className='object-contain mx-auto rounded-md cursor-pointer'
+                          />
+                        ):(
+                          <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
+                        )}
                         <div className='ml-4 flex flex-1 flex-col justify-between sm:ml-6'>
                             <div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0'>
                                 <div>
@@ -141,10 +150,10 @@ const Page = () => {
                                         onClick={() =>
                                         removeItem(food.id)
                                         }
-                                        className='w-fit px-4 py-2 border border-primary-orange hover:text-white hover:bg-primary-orange rounded-md font-satoshi text-xl text-gray-700'
+                                        className='w-fit md:px-4 px-2 md:py-2 py-1 border border-primary-orange hover:text-white hover:bg-primary-orange rounded-md font-satoshi text-xl text-gray-700'
                                         >
                                         <IoMdClose
-                                        className='h-5 w-5'
+                                        className='md:h-5 h-3 md:w-5 w-3'
                                         aria-hidden='true'
                                         />
                                     </button>
