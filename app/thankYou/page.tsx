@@ -88,27 +88,30 @@ const Page = () => {
     useEffect(() => {
         const sendRecipt = async () => {
             const receiptSentKey = `receiptSent_${transactionReference}`;
-            const alreadySent = localStorage.getItem(receiptSentKey);
+            console.log({receiptSentKey}, 'receiptSentKey');
+            if (typeof window !== "undefined") {
+                const alreadySent = localStorage.getItem(receiptSentKey);
+            
 
-            if (!alreadySent && cusPhoneNumber) {
-                // Fetch the Paystack response after navigation
-                const response = await fetch(`/api/message/customer`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        customerName: cusName,
-                        customerNumber: cusPhoneNumber,
-                        customerAddress: cusAddress,
-                        driverNumber: '2348149112999',
-                    }),
-                    headers: { "Content-Type": "application/json" }, 
-                });
-                const TermiiResponse = await response.json(); 
-                console.log(TermiiResponse);
+                if (!alreadySent && cusPhoneNumber) {
+                    // Fetch the Paystack response after navigation
+                    const response = await fetch(`/api/message/customer`, {
+                        method: "POST",
+                        body: JSON.stringify({
+                            customerName: cusName,
+                            customerNumber: cusPhoneNumber,
+                            customerAddress: cusAddress,
+                            driverNumber: '2348149112999',
+                        }),
+                        headers: { "Content-Type": "application/json" }, 
+                    });
+                    const TermiiResponse = await response.json(); 
+                    console.log(TermiiResponse);
 
-                // Mark receipt as sent to prevent duplicates
-                localStorage.setItem(receiptSentKey, 'true');
-            }
-                     
+                    // Mark receipt as sent to prevent duplicates
+                    window.localStorage.setItem(receiptSentKey, 'true');
+                }
+            }      
         };
     
         sendRecipt();
