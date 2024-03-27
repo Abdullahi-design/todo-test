@@ -10,45 +10,44 @@ import { useEffect, useState } from 'react'
 import { useCart } from '../hooks/use-cart'
 import Checkout from "@/components/Checkout";
 
-const Page = () => {
-    const { items, removeItem, updateItemQuantity } = useCart()
-    const [isLoading, setIsLoading] = useState(false)
+interface FoodItem {
+  id: string;
+  name: string;
+  price: number;
+  imageLink?: string;
+  status?: 'Active' | 'Inactive';
+}
 
-    const [quantities, setQuantities] = useState({});
+interface CartItem {
+  food: FoodItem;
+  quantity: number;
+}
 
-    const handleQuantityChange = (id: string, newQuantity: number) => {
-        // Ensure new quantity is not less than 1
-        if (newQuantity < 1) {
-            newQuantity = 1;
-        }
-        // Update local state to reflect the change
-        setQuantities({ ...quantities, [id]: newQuantity });
-        // Update quantity in the cart
-        updateItemQuantity(id, newQuantity);
-    };
+const Page: React.FC = () => {
+  const { items, removeItem, updateItemQuantity } = useCart()
+  const [isLoading, setIsLoading] = useState(false)
 
-  // const router = useRouter()
+  const [quantities, setQuantities] = useState({});
 
-  // const { mutate: createCheckoutSession, isLoading } =
-  //   trpc.payment.createSession.useMutation({
-  //     onSuccess: ({ url }) => {
-  //       if (url) router.push(url)
-  //     },
-  //   })
+  const handleQuantityChange = (id: string, newQuantity: number) => {
+    // Ensure new quantity is not less than 1
+    if (newQuantity < 1) {
+        newQuantity = 1;
+    }
+    // Update local state to reflect the change
+    setQuantities({ ...quantities, [id]: newQuantity });
+    // Update quantity in the cart
+    updateItemQuantity(id, newQuantity);
+  };
 
-  // const productIds = items.map(({ food }) => food.id)
-  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0); 
-
+  
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
     setIsMounted(true)
   }, [])
-
-  const cartTotal = items.reduce(
-    (total, { food, quantity }) => total + (food.price * quantity),
-    0
-  );  
-
+  
+  const totalQuantity = items.reduce((total: number, item: CartItem) => total + item.quantity, 0); 
+  const cartTotal = items.reduce((total: number, { food, quantity }: CartItem) => total + (food.price * quantity), 0 );  
   const fee = 300;
 
   return (

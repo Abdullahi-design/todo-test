@@ -34,7 +34,7 @@ const Receipt: React.FC<ReceiptProps> = ({
   return (
     <div className="rounded-lg border md:mx-12 w-full bg-white border-gray-300 p-6 md:p-8 mt-12">
       <div className='flex justify-between items-center mx-4'>
-        <div className="relative sm:w-20 sm:h-20 w-16 h-16"> {/* Adjust this line */}
+        <div className="relative sm:w-20 sm:h-20 w-16 h-16">
           <Image
             src='/assets/images/ziype_logo.png'
             alt='logo'

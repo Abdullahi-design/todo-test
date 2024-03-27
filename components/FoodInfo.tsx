@@ -35,24 +35,26 @@ const FoodInfo = ({ dish }: any) => {
             {dish && dish.map((food: any, index: number) => (
                     // console.log(food, 'yam')
                 food && food.name && (
-                    <div key={index} className='relative rounded-md my-20 bg-white shadow-lg p-6 py-12 px-32 justify-center'>
+                    <div key={index} className='relative rounded-md my-20 bg-white shadow-lg p-6 py-12 md:mx-0 mx-32 md:px-32 px-16 justify-center'>
                         <span className='flex top-0 left-0 absolute z-20 rounded-full'>
                             <GoDotFill className={`w-8 h-8 ${food.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
                             <h1 className="text-gray-600 text-sm font-bold mt-2">
                                 <span>{restaurants.find((restaurant) => restaurant.dishes.find((dish: any) => dish.id === food.id))?.name}</span>
                             </h1>
                         </span>
-                        {food.imageLink ? (
-                            <Image
-                            src={food.imageLink}
-                            alt={food.name}
-                            width={210}
-                            height={210}
-                            className='object-contain mx-auto rounded-md cursor-pointer'
-                            />
-                        ):(
-                            <span className=''><FaBowlRice className='w-32 md:w-48 h-32 md:h-48 text-center mx-auto text-orange-600' /></span>
-                        )}
+                            {food.imageLink ? (
+                                <div className="relative w-[12rem] h-[12rem]">
+                                    <Image
+                                        src={food.imageLink}
+                                        alt={food.name}
+                                        layout='fill'
+                                        objectFit='contain'
+                                        className='mx-auto rounded-md'
+                                    />
+                                </div>
+                            ):(
+                                <span className=''><FaBowlRice className='w-32 md:w-48 h-32 md:h-48 text-center mx-auto text-orange-600' /></span>
+                            )}
                         <h1 className='text-gray-700 text-xl font-bold text-center my-2'>{food.name}</h1> 
                         <h1 className='text-gray-600 text-base font-bold text-center my-2'>Price: <span>₦{food.price}</span></h1>
                         <AddToCartButton food={food}/>
@@ -64,11 +66,11 @@ const FoodInfo = ({ dish }: any) => {
 
         <>
             <h1 className='text-2xl mt-4 text-orange-600 font-bold tracking-widest md:absolute text-center right-[22rem] top-24'>Add On</h1>
-            <div className="overflow-y-auto h-[26rem] md:w-1/2 w-full md:mt-20 mt-5 rounded-md">
+            <div className="overflow-y-auto h-[26rem] bg-white md:w-[17rem] md:mx-0 mx-32 md:mt-20 mt-5  rounded-md">
                 {restaurants.map((restaurant) => (
                     dish.some((food: any) => restaurant.dishes.some((dish: any) => dish.id === food.id)) ? (
                         restaurant.addOn.map((addOn) => (
-                            <ul key={addOn.id} className='bg-white mx-auto shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
+                            <ul key={addOn.id} className='mx-auto shadow-lg w-fit gap-4 px-8 flex justify-between border-b py-2'>
                                 <div className="relative text-center">
                                     <span className='top-0 -left-6 absolute z-20 rounded-full'>
                                         <GoDotFill className={`w-8 h-8 ${addOn.status == 'Active' ? 'text-green-700' : 'text-red-700'} `}/>
@@ -79,7 +81,7 @@ const FoodInfo = ({ dish }: any) => {
                                         alt={addOn.name}
                                         width={100}
                                         height={100}
-                                        className='object-contain mx-auto rounded-md cursor-pointer'
+                                        className='object-contain mx-auto rounded-md'
                                         />
                                     ):(
                                         <span className=''><FaBowlRice className='w-12 h-12 text-center mx-auto text-orange-600' /></span>
