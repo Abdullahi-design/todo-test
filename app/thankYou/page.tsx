@@ -2,7 +2,7 @@
 
 import Receipt from '@/components/Receipt';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useCart } from '../hooks/use-cart';
 import { FiLoader } from 'react-icons/fi';
 import ReceiptSkeleton from '@/components/ui/ReceiptSkeleton';
@@ -14,7 +14,7 @@ export interface ReceiptData {
     }
 }
 
-const page = () => {
+const Page = () => {
     const searchParams = useSearchParams();
     const transactionReference = searchParams.get("trxref");
     const { items, clearCart } = useCart()
@@ -132,4 +132,12 @@ const page = () => {
     )
 }
 
-export default page
+const PageWithSuspense = () => {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Page />
+      </Suspense>
+    );
+};
+
+export default PageWithSuspense;
