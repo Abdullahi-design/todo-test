@@ -4,6 +4,8 @@ import Receipt from '@/components/Receipt';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCart } from '../hooks/use-cart';
+import { FiLoader } from 'react-icons/fi';
+import ReceiptSkeleton from '@/components/ui/ReceiptSkeleton';
 
 export interface ReceiptData {
     id: string;
@@ -20,6 +22,8 @@ const page = () => {
 
     const [foodItems, setFoodItems] = useState([])
 
+    const [confirmReceipt, setConfirmReceipt] = useState()
+
     const [cusName, setCusName] = useState('')
     const [cusPhoneNumber, setCusPhoneNumber] = useState('')
     const [cusAddress, setCusAddress] = useState('')
@@ -35,7 +39,7 @@ const page = () => {
     },[])
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchRecipt = async () => {
       
           const options = {
             hostname: 'api.paystack.co',
@@ -49,6 +53,10 @@ const page = () => {
     
           const paystackResponse = await fetch(`https://${options.hostname}${options.path}`, options);
           const receipt = await paystackResponse.json();
+          setConfirmReceipt(receipt.status)
+
+          console.log(receipt, 'confirm receipt');
+          
 
           const paidAtDate = new Date(receipt.data.paidAt);
           const formattedDate = paidAtDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
@@ -73,19 +81,53 @@ const page = () => {
         };
     
         if (transactionReference) {
-          fetchProducts();
+          fetchRecipt();
         }
     }, [transactionReference]);     
+
+    useEffect(() => {
+        const sendRecipt = async () => {
+            const receiptSentKey = `receiptSent_${transactionReference}`;
+            const alreadySent = localStorage.getItem(receiptSentKey);
+
+            if (!alreadySent && cusPhoneNumber) {
+                // Fetch the Paystack response after navigation
+                const response = await fetch(`/api/message/customer`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        customerName: cusName,
+                        customerNumber: cusPhoneNumber,
+                        customerAddress: cusAddress,
+                        driverNumber: '2348149112999',
+                    }),
+                    headers: { "Content-Type": "application/json" }, 
+                });
+                const TermiiResponse = await response.json(); 
+                console.log(TermiiResponse);
+
+                // Mark receipt as sent to prevent duplicates
+                localStorage.setItem(receiptSentKey, 'true');
+            }
+                     
+        };
+    
+        sendRecipt();
+    }, [cusPhoneNumber]);     
     
     return (
         <div>
-            <Receipt
-                foodItems={foodItems}
-                timeOrdered={timeOrdered}
-                cusName={cusName}
-                cusAddress={cusAddress}
-                cusPhoneNumber={cusPhoneNumber}
-            />
+            {confirmReceipt == true ? (
+                <Receipt
+                    foodItems={foodItems}
+                    transactionReference={transactionReference}
+                    timeOrdered={timeOrdered}
+                    cusName={cusName}
+                    cusAddress={cusAddress}
+                    cusPhoneNumber={cusPhoneNumber}
+                />
+            ):(
+                <ReceiptSkeleton/>
+            )}
         </div>
     )
 }

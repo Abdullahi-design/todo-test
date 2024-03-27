@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 interface FoodItem {
@@ -10,6 +12,7 @@ interface FoodItem {
 
 interface ReceiptProps {
   foodItems: FoodItem[];
+  transactionReference: string | any;
   timeOrdered: string;
   cusName: string;
   cusAddress: string;
@@ -18,6 +21,7 @@ interface ReceiptProps {
 
 const Receipt: React.FC<ReceiptProps> = ({ 
   foodItems,
+  transactionReference,
   timeOrdered,
   cusName,
   cusAddress,
@@ -28,8 +32,19 @@ const Receipt: React.FC<ReceiptProps> = ({
   const totalWithFee = totalFoodPrice + 300;
 
   return (
-    <div className="rounded-lg border md:mx-12 w-full border-gray-300 p-6 md:p-8 mt-12">
-      <h1 className="orange_gradient text-2xl leading-[1.15] mb-4 -mt-4 -ml-4">Ziype</h1>
+    <div className="rounded-lg border md:mx-12 w-full bg-white border-gray-300 p-6 md:p-8 mt-12">
+      <div className='flex justify-between items-center mx-4'>
+        <div className="relative sm:w-20 sm:h-20 w-16 h-16"> {/* Adjust this line */}
+          <Image
+            src='/assets/images/ziype_logo.png'
+            alt='logo'
+            layout='fill'
+            objectFit='contain'
+            className='mb-4 -mt-4 -ml-4'
+          />
+        </div>
+        <h2 className="md:text-lg text-sm font-semibold mb-6 text-blue-600 hover:text-blue-800 cursor-text hover:underline -mr-4">#{transactionReference}</h2>
+      </div>
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-1/2">
           <h2 className="text-lg font-semibold mb-4 underline">Order Details</h2>
