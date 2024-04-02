@@ -3,3 +3,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form_input {
+    @apply w-[90%] flex rounded-lg mt-2 p-6 text-sm text-gray-500 outline-0;
+}
+  
