@@ -1,10 +1,18 @@
+"use client"
+
 import React from 'react'
 import Upgrade from './Upgrade'
 import Image from 'next/image'
 import TodoItem from './TodoItem'
 import { IoIosAdd } from "react-icons/io";
+import useStore from '@/app/hooks/store';
+import AddTodoModal from './AddTodoModal';
+
 
 const SideBar = () => {
+    const modalOpen = useStore((state) => state.modalOpen);
+    const toggleModal = useStore((state) => state.toggleModal);
+
   return (
     <div className='bg-gray-200 w-[30%] relative h-screen shadow-[rgba(0,0,0,0.2)_2px_5px_4px_0px]'>
         <div className='bg-[#3556AB] text-white'>
@@ -27,7 +35,8 @@ const SideBar = () => {
             <div className='bg-gray-200'>
                 <Upgrade />
                 <TodoItem/>
-                <IoIosAdd className='bg-[#123EB1] rounded-full bottom-6 absolute left-64 p-2 w-12 h-12' />
+                {modalOpen && <AddTodoModal />}
+                <IoIosAdd className='bg-[#123EB1] cursor-pointer rounded-full bottom-6 absolute left-64 p-2 w-12 h-12' onClick={toggleModal} />
             </div>
         </div>
     </div>
