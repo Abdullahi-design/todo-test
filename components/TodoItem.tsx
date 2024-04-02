@@ -37,7 +37,7 @@ const TodoItemComponent: React.FC = () => {
                                 </span>
                             )}
                         </div>
-                        <span>{item.name}</span>
+                        <span className={`${checkedItems[item.id] ? ' line-through text-gray-400': ""}`}>{item.name}</span>
                     </label>
                     <button className='border-[1.7px] rounded-md text-sm border-gray-500 px-2 py-1'>Edit</button>
                 </div>
