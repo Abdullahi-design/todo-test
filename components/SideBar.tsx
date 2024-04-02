@@ -6,8 +6,8 @@ import { IoIosAdd } from "react-icons/io";
 
 const SideBar = () => {
   return (
-    <div className='bg-gray-200 w-[30%] h-screen'>
-        <div className='bg-[#3556AB] text-white opacity-90'>
+    <div className='bg-gray-200 w-[30%] relative h-screen shadow-[rgba(0,0,0,0.2)_2px_5px_4px_0px]'>
+        <div className='bg-[#3556AB] text-white'>
             <nav>
                 <div className="">
                     <div className="rounded-full flex p-4 px-8 gap-2">
