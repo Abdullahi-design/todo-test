@@ -10,6 +10,8 @@ type TodoItem = {
 
 const TodoItemComponent: React.FC = () => {
     const todos = useStore(state => state.todos);
+    const setCurrentEdit = useStore(state => state.setCurrentEdit);
+
     console.log(todos, 'todos');
     
     const toggleTodo = useStore(state => state.toggleTodo);
@@ -35,7 +37,11 @@ const TodoItemComponent: React.FC = () => {
                         </div>
                         <span className={`${todo.completed ? ' line-through text-gray-400': ""}`}>{todo.text}</span>
                     </label>
-                    <button className='border-[1.7px] rounded-md text-sm border-gray-500 px-2 py-1'>Edit</button>
+                    <button
+                     onClick={() => setCurrentEdit(todo)}
+                    className='border-[1.7px] rounded-md text-sm border-gray-500 px-2 py-1'>
+                    Edit
+                    </button>
                 </div>
             ))}
         </div>
