@@ -23,7 +23,7 @@ const TodoItemComponent: React.FC = () => {
     };
 
     return (
-        <div className='bg-gray-200 space-y-2 text-black p-4'>
+        <div className='bg-gray-200 space-y-4 text-black p-4'>
             {items.map((item) => (
                 <div key={item.id} className='bg-white p-4 rounded-md shadow-xl flex items-center justify-between'>
                     <label className='flex items-center cursor-pointer space-x-2'>
